@@ -1,0 +1,17 @@
+#!/bin/bash
+
+for file in /cygdrive/e/cygwin_test/program/*
+do
+   if [ -d "$file" ]
+   then
+       echo "$file is a directory"
+   else
+       echo "$file is a file"
+   fi
+done > for_out.txt 
+
+for state in "North Da" Con Ill Ala Ten
+do
+   echo "$state is the next place to go"
+done | sort
+echo "This complete our travels"

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+while getopts :ab:cd opt
+do
+   case "$opt" in
+   a) echo "Found the -a option";;
+   b) echo "Found the -b option,with para $OPTARG";;
+   c) echo "Found the -c option";;
+   d) echo "Found the -d option";;
+   *) echo "Unknown option: $opt";;
+   esac
+done
+echo "OPTIND :$OPTIND"
+echo $[ $OPTIND - 1 ]
+shift $[ $OPTIND - 1 ]
+
+count=1
+for para in "$@"
+do
+  echo "Para $count: $para"
+  count=$[ $count + 1 ]
+done

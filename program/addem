@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]
+then
+   echo Usage: $0 a b
+   exit
+fi   
+echo The last para is ${!#}
+
+name=`basename $0`
+if [ $name = "addem" ]
+then
+   total=$[ $1 + $2 ]
+elif [ $name = "multem" ]
+then
+   total=$[ $1 * $2 ]
+fi
+echo The cal value is $total

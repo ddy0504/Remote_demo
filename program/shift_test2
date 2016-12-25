@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "The original para is $*"
+shift 2
+echo "here the first para is $1"

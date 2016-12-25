@@ -1,0 +1,11 @@
+#!/bin/bash
+
+fact=1
+for (( number = 1; number <= $1 ;number++ ))
+do
+   fact=$[ $fact * $number ]
+done
+echo The fact of $1 is $fact
+echo The program running is $0
+name=`basename $0`
+echo program is $name
