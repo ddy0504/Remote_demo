@@ -1,3 +1,0 @@
-/cygdrive/d/cygwin_test/helloworld_ddy/cmaketest/build/CMakeFiles/edit_cache.dir
-/cygdrive/d/cygwin_test/helloworld_ddy/cmaketest/build/CMakeFiles/rebuild_cache.dir
-/cygdrive/d/cygwin_test/helloworld_ddy/cmaketest/build/CMakeFiles/cmaketest.dir
