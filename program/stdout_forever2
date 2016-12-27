@@ -1,0 +1,12 @@
+#!/bin/bash
+
+exec 2>testerror
+#这两行输出到屏幕
+echo "This is the start of the script"
+echo "now"
+
+exec 1>testout
+#下面一行输出到testout
+echo "This output should go to the testout file"
+#下面一行输出到testerror
+echo "but this should go to the testerror file" >&2
