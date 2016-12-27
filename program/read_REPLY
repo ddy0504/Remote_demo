@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#read后面不指定变量接收输入，自动存在环境变量REPLY中
+read -p "Enter a number: "
+factorial=1
+for (( count=1;count <= $REPLY;count++ ))
+do
+   factorial=$[ $factorial * $count ]
+done
+echo "The factorial of $REPLY is $factorial"
