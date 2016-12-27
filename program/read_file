@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#读取文件然后一行一行输出
+count=1
+cat 学习.txt | while read line
+do
+   echo "Line $count: $line"
+   count=$[ $count + 1 ]
+done
+echo "Finished process the file"
