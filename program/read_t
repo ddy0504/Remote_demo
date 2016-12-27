@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#-t参数计时，5秒内没有输入，返回非0状态，进入else分之
+if read -t 5 -p "Enter your name: " name
+then
+    echo "Hello $name,welcome"
+else
+    echo
+    echo "Sorry ,too slow"
+fi
