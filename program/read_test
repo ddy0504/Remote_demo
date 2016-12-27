@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#-n选项抑制了字符串结尾的换行符
+echo -n "Enter your name: "
+read name
+echo "Hello $name,welcome"
+

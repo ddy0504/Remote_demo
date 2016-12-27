@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#-p选项允许在read命令行直接指定一个提示
+read -p "Enter your age:" age
+days=$[ $age * 365 ]
+echo "That makes you over $days days old!"
+ 
