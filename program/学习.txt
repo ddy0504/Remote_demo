@@ -17,4 +17,10 @@ wc命令 wc < test 统计数据中的文本
 
 $?保存最后一条命令的执行状态，正常返回0
 
-
+重定向错误:STDERR文件描述符的值设置为2,否则错误信息只会输出
+到屏幕，不会重定向到文件
+ls -al badfile 2> file1
+同时重定向错误和数据到不同的文件
+ls -al test test2 test3 2> test6 1> test7
+所有输出发送到同一文件
+ls -al test test2 test3 &> test7
