@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#-s选项产生默读效果，是将输入到显示器的文本设置成跟背景一个颜色
+read -s -p "Enter your password：" pass
+echo
+echo "Is your password really $pass?"
+
+
