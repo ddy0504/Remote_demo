@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#正常执行时两句都正常输出;./stdout_test 2> test则只将第一句
+#存进文件test
+echo "This is an error" >&2
+echo "This is normal output"
