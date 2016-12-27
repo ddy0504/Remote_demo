@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#exec命令启动一个新的shell,并将STDOUT文件描述符重定向到一个文件
+#这样执行时，不会输出到屏幕
+exec 1> testout
+
+echo "111"
+echo "222"
+
+
