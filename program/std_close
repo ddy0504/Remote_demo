@@ -1,0 +1,14 @@
+#!/bin/bash
+
+exec 3> test17
+
+echo "This is a test line of data" >&3
+
+#关闭文件描述符
+exec 3>$-
+
+cat test17
+
+exec 3> test17
+
+echo "This won't word" >&3
