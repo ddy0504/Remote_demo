@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#将文件描述符3分配给文件testfile的输入输出操作
+exec 3<> testfile
+read line <&3
+echo "Read: $line"
+echo "This is a test line" >&3
