@@ -27,3 +27,7 @@ ls -al test test2 test3 &> test7
 
 空文件 /dev/null
 cat /dev/null > testfile 快速将数据从文件中移除
+
+tee命令将STDIN的数据同时发送到两个目的地
+date | tee testfile  输出在屏幕的同时，输出到文件
+who | tee -a testfile 向已有文件添加数据
