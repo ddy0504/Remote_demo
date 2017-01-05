@@ -24,3 +24,6 @@ ls -al badfile 2> file1
 ls -al test test2 test3 2> test6 1> test7
 所有输出发送到同一文件
 ls -al test test2 test3 &> test7
+
+空文件 /dev/null
+cat /dev/null > testfile 快速将数据从文件中移除
