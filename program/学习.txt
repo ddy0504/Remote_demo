@@ -31,3 +31,7 @@ cat /dev/null > testfile 快速将数据从文件中移除
 tee命令将STDIN的数据同时发送到两个目的地
 date | tee testfile  输出在屏幕的同时，输出到文件
 who | tee -a testfile 向已有文件添加数据
+
+信号 ctrl+c 生成SIGINT信号中断进程
+ctrl+z 生成SIGTSTP信号暂停进程
+ps au查看停止的作业 停止作业的状态STAT项显示为T
