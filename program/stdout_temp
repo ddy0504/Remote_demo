@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#mktemp -t参数在/tmp路径下创建临时文件
+#mktemp -d dir.XXXXXX 参数创建临时目录
 tempfile=`mktemp test19.XXXXXX`
 exec 3>$tempfile
 
