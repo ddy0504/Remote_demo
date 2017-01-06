@@ -35,3 +35,14 @@ who | tee -a testfile 向已有文件添加数据
 信号 ctrl+c 生成SIGINT信号中断进程
 ctrl+z 生成SIGTSTP信号暂停进程
 ps au查看停止的作业 停止作业的状态STAT项显示为T
+
+Linux信号
+信号    值         描述
+ 1     SIGHUP     挂起进程
+ 2     SIGINT     中断进程
+ 3     SIGQUIT    停止进程
+ 9     SIGKILL    无条件终止进程
+ 15    SIGTERM    如果可能的话终止进程
+ 17    SIGSTOP    无条件停止，但不终止进程
+ 18    SIGTSTP    停止或暂停进程，但不终止它
+ 19    SIGCONT    重新启动停止的进程
