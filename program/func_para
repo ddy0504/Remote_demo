@@ -1,0 +1,42 @@
+#!/bin/bash
+
+function addem {
+  if [ $# -eq 0 ] || [ $# -gt 2 ]
+  then
+      echo -1
+  elif [ $# -eq 1 ]
+  then
+      echo $[ $1 + $1 ]
+  else
+      echo $[ $1 + $2 ]
+  fi
+}
+
+echo -n "Adding 10 and 15: "
+value=`addem 10 15`
+echo $value
+echo -n "Try adding just one number: "
+value=`addem 10`
+echo $value
+echo -n "Trying no number: "
+value=`addem`
+echo $value
+echo -n "Trying three number: "
+value=`addem 10 15 20`
+echo $value
+
+function func1 {
+  local temp=$[ $val + 5 ]
+  result=$[ $temp * 2 ]
+}
+temp=4
+val=6
+
+func1
+echo "The result is $result"
+if [ $temp -gt $val ]
+then
+   echo "temp is larger"
+else
+   echo "temp is smaller"
+fi
