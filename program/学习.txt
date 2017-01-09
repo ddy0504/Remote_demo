@@ -69,3 +69,38 @@ sed -f script1 test
 script1存储：
 s/brown/green/
 s/dog/cat/
+
+sed 's/test/trial/2' data4 指定2作为替换标记，仅替换
+每一行中第二次出现的模式
+sed 's/test/trial/g' data4 g替换文本中模式的每一个实例
+sed -n 's/test/trial/p' data4 p打印包含替换命令中匹配模式的那一行,-n选项禁止sed编辑器输出
+sed 's/test/trial/w test' data5 w将输出保存到test文件
+sed 's!/bin/bash!/bin/csh!' /etc/passwd 感叹号用作字符串定界符
+
+使用地址
+sed '2s/dog/cat/' data 仅替换第2行
+sed '2,3s/dog/cat/' data 替换第2行和第3行
+sed '2,$s/dog/cat/' data 从第二行开始直到文本结束
+sed '2d' data 将data中内容删除第2行，然后输出
+sed '2,3d' data
+sed '2,$d' data
+sed '/number 1/d' data 模式匹配，删除带有number 1的行
+sed '/1/,/3/d' data 指定开始模式，和结束模式，将之间删除，若没发现结束模式，则全删
+
+gawk命令,$0表示整行文本，$1表示文本行中第一个数据字段
+默认字段分隔符为空白符
+gawk '{print "hello"}'
+gawk '{print $1}' data
+gawk -F: '{print $1}' /etc/passwd -F指定文件中数据分隔
+符为:
+echo "My name is Rich" | gawk '{$4="Dave"; print $0}'
+引用文件中的命令
+gawk -F: -f script /etc/passwd
+script中内容为{print $5 "'s userid is" $1}
+
+gawk 'BEGIN {print "Hello World"}' 先执行BEGIN，然后退出
+gawk 'BEGIN {print "Hello world"} {print $0}'
+gawk 'BEGIN {print "Hello world"} {print $0} END {
+print "bye"}'
+
+
