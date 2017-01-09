@@ -60,3 +60,12 @@ renice 10 -p PID
 renice也是只能调制更低优先级，使用根用户可以调至更高
 默认的优先级为0，即默认启动
 
+sed命令
+echo "This is a test" | sed 's/test/big test/'
+sed 's/dog/cat/' test
+sed -e 's/brown/green/; s/dog/cat/' test
+sed从文件中读取命令
+sed -f script1 test
+script1存储：
+s/brown/green/
+s/dog/cat/
