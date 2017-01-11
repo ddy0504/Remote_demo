@@ -138,3 +138,47 @@ sed -n '/[a-ch-m]/p' data
 [[:punct:]] 匹配标点符号
 [[:space:]] 匹配任意空白字符
 [[:upper:]] 匹配任意大写字母
+
+在某个字符之后加星号，表示该字符必须在匹配模式的文本
+中不出现或出现多次
+echo "ik" | sed -n '/ie*k/p
+
+/regular.*expression/' 匹配regular和expression不相邻
+出现的情形
+
+/b[ae]*t/ a和e字符任意组合出现在b和t之间（包括不出
+现），定义的字符类以外的字符出现，匹配失败
+
+问号表示其前面的字符可以不出现或出现一次
+echo "beet" | gawk '/be?t/{print $0}'
+
+问号与字符类连用，可以不出现，也可以只出现一个
+但不能同时出现
+echo "bt" | gawk '/b[ae]?t/{print $0}'
+
+加号表示e至少要出现一次
+echo "bet" | gawk '/be+t/{print $0}'
+
+加号也可与字符类连用,a或e必须至少出现一个
+echo "bt" | gawk '/b[ae]+t/{print $0}'
+
+b与t之间e出现的次数
+echo "bet" | gawk --re-interval '/be{1}t/{print $0}'
+e可以出现一次或两次
+echo "bet" | gawk --re-interval '/be{1,2}t/{print $0}'
+echo "bet" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+管道符号
+查找正则表达式cat或dog,正则表达式与管道之间不能有空格
+否则将把空格加入模式中
+echo "The cat is asleep" | gawk '/cat|dog/{print $0}'
+
+管道符号两边的任何正则表达式都可以使用任意正则表达式模式
+（包括字符类）
+echo "He has a hat" | gawk '/[ch]at|dog/{print $0}'
+
+正则表达式模式使用圆括号分组
+echo "Sat" | gawk '/Sat(urday)?/{print $0}'
+
+分组与管道符号结合
+echo "cat" | gawk '/(c|b)a(b|t)/{print $0}'
