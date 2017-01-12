@@ -182,3 +182,32 @@ echo "Sat" | gawk '/Sat(urday)?/{print $0}'
 
 分组与管道符号结合
 echo "cat" | gawk '/(c|b)a(b|t)/{print $0}'
+
+保留空间
+模式空间是一个活动的缓冲区，另一空间：保留空间
+h:将模式空间复制到保留空间
+H:将模式空间追加到保留空间
+g:将保留空间的内容（第一行数据）复制到模式空间
+   替换当前文本
+G:将保留空间追加到模式空间
+x:将模式空间和保留空间的内容交换
+
+sed中n命令，检索下一行，放到模式空间
+p命令会打印模式空间的内容
+否定命令：检索出来的header行不打印，其余行打印
+sed -n '/header/!p' data
+
+分支命令 b后面没跟标签，则只有第2，3行不执行替换
+sed '{
+2,3b
+s/This is/Is this/
+s/line./test?/
+}' data
+
+sed '{  
+/first/b jump1
+s/ is/ might be/
+s/line/test/
+:jump1
+s/data/text/
+}' data2
