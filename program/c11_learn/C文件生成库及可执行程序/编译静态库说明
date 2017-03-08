@@ -1,0 +1,11 @@
+gcc -c func1.c
+gcc -c func2.c
+
+进行打包
+ar -r libfunc.a func1.o func2.o
+
+查看libfunc.a中的文件
+ar -t libfunc.a
+
+用静态库和main.c共同生成可执行文件
+gcc -o main main.c libfunc.a
