@@ -1,0 +1,36 @@
+
+CC = gcc
+SRCDIR = ./
+OBJDIR = ./obj
+TARGET_DIR = ./bin
+CFLAGS = -w -g
+
+SRCS+= \
+       test.c
+
+OBJS = $(SRCS:.c=.o)
+LIBOBJS = $(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
+API_PATH = ./lib
+INCLDIR = -I./
+LD_LIB_PATH = -L$(API_PATH)
+LD_SYS_LIBS = -lpthread -ldl
+
+#LD_APP_LIBS = $(API_PATH)/libfunc.a
+LD_APP_LIBS = -lfunc
+
+TARGET = $(TARGET_DIR)/libdemo
+all:mkdirs $(TARGET)
+
+mkdirs:
+	mkdir -p $(TARGET_DIR)
+
+$(TARGET):$(LIBOBJS)
+	@echo ""
+	@echo "___Compile________ $@"
+	$(CC) -o $@ $(LIBOBJS) $(CFLAGS) $(LD_LIB_PATH) $(LD_SYS_LIBS) $(LD_APP_LIBS)
+
+$(OBJDIR)/%.o: %.c
+	$(CC) $(CFLAGS) $(INCLDIR) -c -o $@ $< 
+
+clean:
+	rm -f $(LIBOBJS) $(TARGET)    

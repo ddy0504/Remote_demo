@@ -1,0 +1,6 @@
+gcc -fpic -c func1.c --- 生成func1.o
+gcc -fpic -c func2.c --- 生成func2.o
+
+gcc -shared -o libfunc.so func1.o func2.o --- 生成libfunc.so
+
+gcc -o main main.c -L. libfunc.so
