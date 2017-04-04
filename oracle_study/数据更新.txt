@@ -1,0 +1,113 @@
+将emp表复制一份，这种操作只有oracle支持
+create table myemp as select * from emp; 
+
+增加DATE数据
+1、“17-12月-80”
+2、TO_DATE()
+
+缺少deptno字段
+insert into myemp (empno,ename,hiredate,sal,mgr,job,comm)
+      values(8888,'张三',to_date('1960-08-17','yyyy-mm-dd'),8000,7369,'清洁工',1000);
+
+缺少comm字段
+insert into myemp (empno,ename,hiredate,sal,mgr,job,deptno)
+      values(8889,'李四',sysdate,3000,7369,'清洁工',30);
+
+增加数据--简便语法，不写列名称
+insert into myemp
+      values(8889,'李四',sysdate,3000,7369,'清洁工',30);  字段不足
+
+正确：但不可取，不利于程序维护
+insert into myemp
+      values(8889,'李四','清洁工',7369,sysdate,3000,null,30);
+
+数据修改：
+update myemp set sal=5000,comm=2000,job='MANAGER',hiredate=sysdate where empno=7369;
+
+update myemp set sal=5000*1.5;更新全部数据，不可取，若数据量大，性能明显降低
+
+数据删除
+delete from myemp where to_char(hiredate,'yyyy')=1987;
+
+如果删除的时候没有匹配条件的数据存在，则更新的数据条数为0
+
+删除表中全部数据
+delete from myemp;
+
+事务处理
+很多时候更新可能由多条指令共同完成，以银行转账为例
+1、判断A账户是否有钱
+2、判断B账户是否存在，并且状态是否正常
+3、从A账户移走钱
+4、向B账户增加钱
+5、向银行支付手续费
+以上操作是一个整体，是一个完整的业务，如果第3步出错，所有操作不再执行
+并且回归到原始状态，这一个操作流程就是事务的操作
+
+update更新操作操作并不是真正的事务操作，
+
+rollback;回到最初，之前所有更新操作都没有了
+
+所有事务处理操作都是针对每一个session进行的，在oralce中把每一个
+连接到数据库的用户都称为一个session,同一用户登2次是2个session，彼此
+独立。每一个session独享自己的事务控制。
+rollback;回到最初，之前所有更新操作都没有了
+commit;事务提交，真正发出更新操作，提交后无法回滚
+
+某一个session更新数据表没提交事务，，另一个session无法更新。
+
+会等待，死锁。oracle中死锁有很多种，由DBA负责
+
+这些都是DML语言中的基本概念
+
+数据伪列：用户不需要处理的列，由oracle自行维护的数据列
+oracle有2个数据伪列ROWNUM,ROWID
+ROWNUM为每一个显示的记录都会自动的随着查询生成行号
+
+select ROWNUM,empno,ename,job,hiredate,sal from emp
+where ROWNUM<=5;
+ROWNUM是每次动态重新生成的，可以实现数据的部分显示
+
+查询6-10条记录，不能用between...and,先查前10条，之后显示后5条记录，
+依靠子查询完成。
+select * from ( select ROWNUM rn,empno,job,hiredate,sal from emp
+      where ROWNUM<=10) temp
+where temp.rn>5;
+
+分页功能的实现
+
+ROWID表示的是每一行数据保存的物理地址的 编号
+
+select ROWID,deptno,dname,loc from dept;
+每一条记录的ROWID都不会重复，即便表中所有列的数据内容都重复了
+ROWID也不重复
+ROWID:AAAR3qAAEAAAACHAAA
+数据对象号：AAAR3q
+相对文件号：AAE
+数据块号：AAAACH
+数据行号：AAA
+
+删除表中的重复记录
+insert into dept(deptno,dname,loc) values (21,'RESEARCH','DALLAS');
+insert into dept(deptno,dname,loc) values (31,'SALES','CHICAGO');
+insert into dept(deptno,dname,loc) values (32,'SALES','CHICAGO');
+insert into dept(deptno,dname,loc) values (41,'OPERATIONS','BOSTON');
+insert into dept(deptno,dname,loc) values (42,'OPERATIONS','BOSTON');
+insert into dept(deptno,dname,loc) values (43,'OPERATIONS','BOSTON');
+commit;
+
+按照部门名称及位置分组，之后统计个数大于1，则表示重复
+
+select dname,loc,min(ROWID) from dept group by dname,loc having count(deptno)>1;
+
+数据插入的早，ROWID就小
+
+必须先确定不能删除的ROWID，
+
+select min(ROWID) from dept group by dname,loc;查出最早的4个ROWID
+
+DELETE FROM dept
+WHERE ROWID NOT IN (
+    SELECT MIN(ROWID) 
+    FROM dept 
+    GROUP BY dname,loc ) ;
