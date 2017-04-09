@@ -1,0 +1,79 @@
+表的创建及管理
+每一张表表示一个数据库的对象，而在数据库对象指的就是DDL定义的所有操作：
+例如，表、视图、索引、序列、约束等，都属于对象的操作，表的建立就是对象的建立
+
+对象的操作分为
+
+常用的数据字段：
+字符串：VARCHAR2(n),n表示字符串所能保存的最大长度，基本上保存200左右的内容
+整数：NUMBER(n),表示最多为n位整数，有时候也可以使用INT代替
+小数：NUMBER(n,m),m为小数位，n-m为整数位，有时候也可以使用FLOAT代替
+日期：DATE，存放日期时间
+大文本：CLOB，可以存储海量文字（4G），例如存储《三国演义》，只能存放文本
+大对象：BLOB,存放二进制数据，例如电影
+
+oracle就叫VARCHAR2，其他数据库叫VARCHAR
+
+创建表
+CREATE TABLE member(
+      name    VARCHAR2(50)    DEFAULT '无名氏'  ,
+      age     NUMBER(3)    ,
+      birthday   DATE     DEFAULT SYSDATE  ,
+      content    CLOB
+);
+
+INSERT INTO member(name,age,birthday,content) values ('张三',20,TO_DATE('1990-08-12','yyyy-mm-dd'),'好人');
+
+表的复制
+
+CREATE TABLE emp20 as select * from emp where deptno=20;
+
+如何将表结构赋值出来，不要数据：写一个永远满足不了的条件即可
+
+
+CREATE TABLE empnull as select * from emp where 1=20;
+
+表重命名
+
+oracle中所有数据都是通过数据字典保存的，oracle提供了三种类型的数据字典，最常用的：dba_,user_
+
+查询user_tables数据字典
+select * from user_tables;
+
+oracle中所有数据都是按照文件保存的，所有内容都会在数据字典中注册
+修改表名称对于oracle相当于修改一条数据
+
+RENAME member TO person;
+
+截断表
+
+如果希望彻底释放一张表所占用的全部资源，可以阶段表
+TRUNCATE TABLE persion;
+
+表的删除：数据库对象的删除
+DROP TABLE persion;
+
+闪回（FLASHBACK）技术
+
+预防用户误删表操作，提供了回收站功能
+
+查看回收站：SHOW RECYCLEBIN;
+
+恢复：FLASHBACK TABLE member TO BEFORE DROP;
+
+删除回收站中的数据表：
+PURGE TABLE member;
+
+清空回收站：PURGE RECYCLEBIN;
+
+希望删除一张表，又不希望其进入回收站中，则可以在删除时增加PURGE
+DROP TABLE persion PURGE;
+
+修改表结构
+
+增加字段：
+ALTER TABLE member ADD (age NUMBER(3),birthday DATE DEFAULT SYSDATE);
+如果增加的数据列没有默认值，则内容为空
+
+修改列的默认值：
+ALTER TABLE member MODIFY (name VARCHAR2(100) DEFAULT '无名氏');
