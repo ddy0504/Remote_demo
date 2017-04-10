@@ -1,0 +1,17 @@
+python安装部分模块会报错Microsoft Visual C++ 10.0 is required (Unable to find vcvarsall.bat)
+
+如果电脑安装了VS2013首先
+
+环境变量VS120COMNTOOLS 路径为 D:\Program Files\Microsoft Visual Studio 12.0\Common7\Tools
+
+但是vcvarsall.bat文件在D:\Program Files\Microsoft Visual Studio 12.0\VC路径下
+
+手动将vcvarsall.bat拷贝到D:\Program Files\Microsoft Visual Studio 12.0\Common7\Tools路径下
+
+如果安装的是python3.x，在cmd命令行执行 SET VS100COMNTOOLS=%VS120COMNTOOLS%
+
+如果安装的是python2.x，在cmd命令行执行 SET VS90COMNTOOLS=%VS120COMNTOOLS%
+
+然后再执行pip3.4.exe install cx_Oracle
+
+
