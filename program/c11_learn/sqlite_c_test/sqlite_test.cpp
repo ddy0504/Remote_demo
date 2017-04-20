@@ -13,24 +13,22 @@ static int callback(void *data, int argc, char **argv, char **azColName){
    return 0;
 }
 
-int main(int argc, char* argv[])
-{
+int Open(){
    sqlite3 *db;
    char *zErrMsg = 0;
    int rc;
    char *sql;
    const char* data = "Callback function called";
 
-
+   /* Open database */
    rc = sqlite3_open("testDB.db", &db);
-
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       exit(0);
    }else{
       fprintf(stderr, "Opened database successfully\n");
    }
-   
+
    /* Create SQL statement */
    sql = "SELECT * from COMPANY";
 
@@ -43,6 +41,18 @@ int main(int argc, char* argv[])
       fprintf(stdout, "Operation done successfully\n");
    }
    sqlite3_close(db);
+   return 0;
+}
+
+int main(int argc, char* argv[])
+{
+   char *zErrMsg = 0;
+   int ret;
+   char *sql;
+   const char* data = "Callback function called";
+
+   ret = Open();
+
    return 0;
 
 }
