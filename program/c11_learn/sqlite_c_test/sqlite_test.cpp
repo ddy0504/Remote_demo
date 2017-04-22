@@ -31,15 +31,14 @@ int Open(){
    return 0;
 }
 
-int Select(){
+int Operate(char *sql){
 
-   char *sql;
+   //char *sql;
    const char* data = "Callback function called";
    char *zErrMsg = 0;
-   /* Create SQL statement */
-   sql = "SELECT * from COMPANY";
 
    /* Execute SQL statement */
+   //第四个参数若无须传入，可传入0
    int rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
    if( rc != SQLITE_OK ){
       fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -51,40 +50,39 @@ int Select(){
    return 1;
 }
 
-int Insert(){
-   char *sql;
-   char *zErrMsg = 0;
-   /* Create SQL statement */
-   sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
-         "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "     \
-         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
-         "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );" \
-         "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
-         "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
-
-   /* Execute SQL statement */
-   int rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
-   if( rc != SQLITE_OK ){
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-      return 0;
-   }else{
-      fprintf(stdout, "Records created successfully\n");
-   }
-   return 1;
-}
-
 int main(int argc, char* argv[])
 {
    int ret;
+   char *sql;
 
    ret = Open();
 
-   ret = Select();
+   sql = "SELECT * from COMPANY";
+   ret = Operate(sql);
 
-   ret = Insert();
+   //更新记录
+   //sql = "UPDATE COMPANY set SALARY = 25000.00 where ID=1; " \
+         "SELECT * from COMPANY";
+   //ret = Operate(sql);
 
-   Select();
+   //删除记录
+   //sql = "DELETE from COMPANY where ID=2; " \
+         "SELECT * from COMPANY";
+   //ret = Operate(sql);
+
+   //插入记录
+   //sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
+         "VALUES (5, 'ddy', 25, 'China', 15.00 ); "\
+         "SELECT * from COMPANY";
+   //ret = Operate(sql);
+
+   //创建表
+   //sql = "CREATE TABLE DEPARTMENT( "\
+         "ID INT PRIMARY KEY      NOT NULL, "\
+         " DEPT           CHAR(50) NOT NULL, "\
+         "EMP_ID         INT      NOT NULL "\
+         ")";
+   //Operate(sql);
 
    sqlite3_close(db);
 
