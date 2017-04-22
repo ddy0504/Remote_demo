@@ -1,0 +1,5 @@
+hello_client.c -o hclient
+hello_server.c -o hserver
+
+./hserver.exe 9999
+./hclient.exe 127.0.0.1 9999

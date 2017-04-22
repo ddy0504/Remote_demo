@@ -1,0 +1,36 @@
+
+GCC = g++
+SRCDIR = ./
+OBJDIR = .
+TARGET_DIR = ./
+CPPFLAGS = -std=c++11 -w -g
+
+SRCS+= \
+       server.cpp
+
+OBJS = $(SRCS:.cpp=.o)
+LIBOBJS = $(addprefix $(OBJDIR)/,$(SRCS:.cpp=.o))
+API_PATH = ./lib
+INCLDIR = -I$(API_PATH)
+LD_LIB_PATH = -L$(API_PATH)
+LD_SYS_LIBS = -lpthread -ldl -lws2_32
+
+#LD_APP_LIBS = $(API_PATH)/libfunc.a
+#LD_APP_LIBS = -lfunc
+
+TARGET = $(TARGET_DIR)/Server
+all:mkdirs $(TARGET)
+
+mkdirs:
+	mkdir -p $(TARGET_DIR)
+
+$(TARGET):$(LIBOBJS)
+	@echo ""
+	@echo "___Compile________ $@"
+	$(GCC) -o $@ $(LIBOBJS) $(CPPFLAGS) $(LD_SYS_LIBS) 
+
+$(OBJDIR)/%.o: %.cpp
+	$(GCC) $(CPPFLAGS) -c -o $@ $< 
+
+clean:
+	rm -f $(LIBOBJS) $(TARGET)    
